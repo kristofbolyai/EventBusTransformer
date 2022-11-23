@@ -46,7 +46,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            groupId "com.github.coehlrich"
+            groupId "com.github.kristofbolyai"
         }
     }
 }
