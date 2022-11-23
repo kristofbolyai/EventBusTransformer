@@ -1,8 +1,6 @@
 package com.wynntils.eventbustransformer;
 
-import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.EventBusEngine;
-import net.minecraftforge.eventbus.service.ModLauncherService;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,13 +15,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger("EventBusTransformer");
-    
+
     public static void main(String[] args) throws IOException {
         EventBusEngine engine = new EventBusEngine();
         
