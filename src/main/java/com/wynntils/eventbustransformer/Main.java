@@ -1,6 +1,8 @@
 package com.wynntils.eventbustransformer;
 
+import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.EventBusEngine;
+import net.minecraftforge.eventbus.service.ModLauncherService;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +22,11 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class Main {
-
     private static final Logger LOGGER = LogManager.getLogger("EventBusTransformer");
-    public static void main(String[] args) throws ZipException, IOException {
+    
+    public static void main(String[] args) throws IOException {
+        EventBusEngine engine = new EventBusEngine();
+        
         File file = new File(args[0]);
         ZipFile zip = new ZipFile(file);
         File transformed = new File(args.length > 1 ? args[1] : "transformed.jar");
@@ -35,12 +39,12 @@ public class Main {
             byte[] content = IOUtils.toByteArray(zip.getInputStream(next));
             if (next.getName().endsWith(".class")) {
                 Type type = Type.getObjectType(next.getName().replace(".class", ""));
-                if (EventBusEngine.INSTANCE.handlesClass(type)) {
+                if (engine.handlesClass(type)) {
                     ClassReader reader = new ClassReader(content);
                     ClassNode node = new ClassNode();
                     reader.accept(node, 0);
 
-                    EventBusEngine.INSTANCE.processClass(node, type);
+                    engine.processClass(node, type);
                     
                     ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
                     node.accept(writer);
