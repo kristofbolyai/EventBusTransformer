@@ -35,8 +35,9 @@ public class Main {
             output.putNextEntry(next);
             byte[] content = IOUtils.toByteArray(zip.getInputStream(next));
             if (next.getName().endsWith(".class")) {
-                Type type = Type.getObjectType(next.getName().replace(".class", ""));
-                if (engine.handlesClass(type)) {
+                String className = next.getName().replace(".class", "");
+                Type type = Type.getObjectType(className);
+                if (engine.handlesClass(type) && className.startsWith("com.wynntils")) {
                     LOGGER.info("Transforming class " + type.getClassName());
                     ClassReader reader = new ClassReader(content);
                     ClassNode node = new ClassNode();
