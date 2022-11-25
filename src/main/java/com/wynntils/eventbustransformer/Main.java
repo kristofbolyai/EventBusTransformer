@@ -37,6 +37,7 @@ public class Main {
             if (next.getName().endsWith(".class")) {
                 Type type = Type.getObjectType(next.getName().replace(".class", ""));
                 if (engine.handlesClass(type)) {
+                    LOGGER.info("Transforming class " + type.getClassName());
                     ClassReader reader = new ClassReader(content);
                     ClassNode node = new ClassNode();
                     reader.accept(node, 0);
