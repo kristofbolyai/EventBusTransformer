@@ -2,6 +2,8 @@ package com.wynntils.eventbustransformer;
 
 import dev.architectury.transformer.transformers.base.ClassEditTransformer;
 import net.minecraftforge.eventbus.EventBusEngine;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
@@ -9,6 +11,8 @@ import org.objectweb.asm.tree.ClassNode;
 
 public class EventBusTransform implements ClassEditTransformer {
     private static final long serialVersionUID = -2304913653368586405L;
+
+    private static final Logger LOGGER = LogManager.getLogger("EventBusTransformer");
 
     private static EventBusEngine engine;
 
@@ -19,7 +23,9 @@ public class EventBusTransform implements ClassEditTransformer {
         }
 
         Type type = Type.getObjectType(node.name);
+        LOGGER.debug("Trying to transform class " + type.getClassName());
         if (engine.handlesClass(type)) {
+            LOGGER.info("Transforming class " + type.getClassName());
             dev.architectury.transformer.shadowed.impl.org.objectweb.asm.ClassWriter architecturyClassWriter = new dev.architectury.transformer.shadowed.impl.org.objectweb.asm.ClassWriter(0);
             node.accept(architecturyClassWriter);
             ClassReader normalClassReader = new ClassReader(architecturyClassWriter.toByteArray());
