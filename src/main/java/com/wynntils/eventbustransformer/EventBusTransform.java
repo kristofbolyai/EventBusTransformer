@@ -23,8 +23,9 @@ public class EventBusTransform implements ClassEditTransformer {
         }
 
         Type type = Type.getObjectType(node.name);
-        if (engine.handlesClass(type) && type.getClassName().startsWith("com.wynntils")) {
-            LOGGER.info("Transforming class " + type.getClassName());
+        String className = type.getClassName();
+        if (engine.handlesClass(type) && className.startsWith("com.wynntils") && className.contains("Event")) {
+            LOGGER.info("Transforming class " + className);
             dev.architectury.transformer.shadowed.impl.org.objectweb.asm.ClassWriter architecturyClassWriter = new dev.architectury.transformer.shadowed.impl.org.objectweb.asm.ClassWriter(0);
             node.accept(architecturyClassWriter);
             ClassReader normalClassReader = new ClassReader(architecturyClassWriter.toByteArray());
