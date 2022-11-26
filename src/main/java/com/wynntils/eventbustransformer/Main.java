@@ -37,7 +37,7 @@ public class Main {
             if (next.getName().endsWith(".class")) {
                 Type type = Type.getObjectType(next.getName().replace(".class", ""));
                 String className = type.getClassName();
-                if (engine.handlesClass(type) && className.startsWith("com.wynntils") && className.contains("Event")) {
+                if (engine.handlesClass(type) && className.startsWith("com.wynntils")) {
                     LOGGER.debug("Transforming class " + type.getClassName());
                     ClassReader reader = new ClassReader(content);
                     ClassNode node = new ClassNode();
