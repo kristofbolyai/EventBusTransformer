@@ -36,7 +36,8 @@ public class Main {
             byte[] content = IOUtils.toByteArray(zip.getInputStream(next));
             if (next.getName().endsWith(".class")) {
                 Type type = Type.getObjectType(next.getName().replace(".class", ""));
-                if (engine.handlesClass(type)) {
+                String className = type.getClassName();
+                if (engine.handlesClass(type) && className.startsWith("com.wynntils")) {
                     ClassReader reader = new ClassReader(content);
                     ClassNode node = new ClassNode();
                     reader.accept(node, 0);
