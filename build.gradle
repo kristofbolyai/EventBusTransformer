@@ -41,9 +41,7 @@ compileJava {
 }
 
 dependencies {
-    implementation("net.minecraftforge:eventbus:6.0.+") {
-//        exclude group: "cpw.mods", module: "modlauncher"
-    }
+    implementation("net.minecraftforge:eventbus:6.0.+")
     implementation "dev.architectury:architectury-transformer:5.2.+"
     implementation "commons-io:commons-io:2.11.+"
     implementation "org.ow2.asm:asm:9.2"

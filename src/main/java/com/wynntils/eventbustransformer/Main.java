@@ -22,15 +22,12 @@ import org.objectweb.asm.tree.ClassNode;
 import net.minecraftforge.eventbus.IEventBusEngine;
 
 public class Main {
-
-    private static final Logger LOGGER = LogManager.getLogger("EventBusTransformer");
-    public static void main(String[] args) throws ZipException, IOException {
+    public static void main(String[] args) throws IOException {
         File file = new File(args[0]);
         ZipFile zip = new ZipFile(file);
         File transformed = new File(args.length > 1 ? args[1] : "transformed.jar");
         ZipOutputStream output = new ZipOutputStream(new FileOutputStream(transformed));
         IEventBusEngine engine = ServiceLoader.load(IEventBusEngine.class).findFirst().orElseThrow();
-//        IEventBusEngine engine = new EventBusEngine();
 
         Enumeration<? extends ZipEntry> entries = zip.entries();
         while (entries.hasMoreElements()) {
@@ -66,7 +63,5 @@ public class Main {
             write.close();
             read.close();
         }
-
     }
-
 }
